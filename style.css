@@ -1,0 +1,38 @@
+.tabs{
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  margin:20px;
+  width:80%;
+}
+
+.tab-btn{
+  flex-grow:1;
+  max-height:40px;
+  padding:10px;
+  background:#eee;
+  cursor:pointer;
+  border:none;
+  border-left:10px solid #ccc;
+  transition:0.2s;
+}
+
+.tab-btn:hover{
+  background:#fff;
+}
+
+.tab-btn.active{
+  background:#fff;
+  border-left-color:#69be28;
+}
+
+#content{
+  background:#fff;
+  padding:20px;
+  width:100%;
+}
+div.przyciski button{
+  padding:10px;
+  border:none;
+  background-color: #69be28;
+}
