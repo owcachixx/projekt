@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 06, 2026 at 02:41 PM
+-- Host: localhost
+-- Generation Time: Mar 09, 2026 at 12:13 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -127,7 +127,8 @@ INSERT INTO `sedzia` (`id`, `imie`, `nazwisko`) VALUES
 
 CREATE TABLE `turniej` (
   `id` int(11) NOT NULL,
-  `data` date NOT NULL
+  `data` date NOT NULL,
+  `nazwa` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 -- --------------------------------------------------------
