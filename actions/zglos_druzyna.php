@@ -9,12 +9,13 @@ if(isset($_SESSION['turniej_id'])){
             $check_result=mysqli_query($con, $check_sql);
             if(mysqli_num_rows($check_result) == 0){
                 $sql="INSERT INTO udzial (id_druzyna, id_turniej) VALUES ($key, ".$_SESSION['turniej_id'].")";
-                mysqli_query($con, $sql);
             }
         }
     }
 }
 
+mysqli_query($con, $sql);
 header("Location: ../index.html");
 exit;
+
 ?>
