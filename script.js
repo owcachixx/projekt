@@ -1,61 +1,65 @@
-function openTab(button,file) {
-  document.querySelectorAll(".tab-btn").forEach(tab => {
-    tab.classList.remove("active");
+document.addEventListener("DOMContentLoaded", () => {
+  const tabs = document.querySelectorAll(".tab-btn");
+  tabs.forEach(btn => {
+    btn.addEventListener("click", () => {
+      openTab(btn, btn.dataset.file);
+    });
   });
+  const params = new URLSearchParams(window.location.search);
+  const tabFromUrl = params.get("tab");
+  let defaultTab = tabs[0];
+  if(tabFromUrl) {
+    const btn = Array.from(tabs).find(b => b.dataset.file === tabFromUrl);
+    if(btn) defaultTab = btn;
+  }
+  openTab(defaultTab, defaultTab.dataset.file);
+});
+
+function openTab(button, file) {
+  document.querySelectorAll(".tab-btn").forEach(tab => tab.classList.remove("active"));
   button.classList.add("active");
+  history.replaceState(null, "", "?tab=" + encodeURIComponent(file));
   fetch(file)
-    .then(response => response.text())
-    .then(data => {
-      document.getElementById("content").innerHTML = data;
+    .then(res => {
+      if(!res.ok) throw new Error("Nie znaleziono pliku: " + file);
+      return res.text();
+    })
+    .then(html => {
+      document.getElementById("content").innerHTML = html;
       setupFormHandler();
+    })
+    .catch(err => {
+      console.error(err);
+      document.getElementById("content").innerHTML = "<p>Nie udało się załadować zakładki.</p>";
     });
 }
 
 function setupFormHandler() {
-  const allForms = document.querySelectorAll("#content form");
-    allForms.forEach(form => {
-    if(form.hasListener) return;
-    form.hasListener = true;
-    
-    form.addEventListener("submit", function(e) {
+  const forms = document.querySelectorAll("#content form");
+  forms.forEach(form => {
+    if(form.dataset.listener) return;
+    form.dataset.listener = "true";
+    form.addEventListener("submit", e => {
       e.preventDefault();
-      const formData = new FormData(form);
-      fetch(form.action, {
-        method: "POST",
-        body: formData,
-        credentials: 'same-origin'
-      })
-      .then(response => response.text())
-      .then(data => {
-        console.log("Success:", data);
-        const forms = document.querySelectorAll("#content form");
-        forms.forEach(f => {
-          if(f.classList && f.classList.contains("dodaj_druzyne_form")) {
-            f.style.display = "none";
-            f.reset();
-          }
-          f.reset();
-        });
-        const activeBtn = document.querySelector(".tab-btn.active");
-        const fileToLoad = activeBtn.getAttribute("onclick").match(/'([^']+)'/)[1];
-        openTab(activeBtn, fileToLoad);
-      })
-      .catch(error => console.error("Error:", error));
+      const data = new FormData(form);
+      fetch(form.action, { method: "POST", body: data, credentials: 'same-origin' })
+        .then(res => res.text())
+        .then(resp => {
+          console.log("Success:", resp);
+          form.reset();
+          openTab(document.querySelector(".tab-btn.active"), document.querySelector(".tab-btn.active").dataset.file);
+        })
+        .catch(err => console.error(err));
     });
   });
 }
 
-function resetDruzyna() {
-  const resetBtn = document.getElementById("reset_druzyny");
-  if(resetBtn) resetBtn.style.display = "block";
-}
-
+// Funkcje dla drużyn 
 function hideAllActions() {
   const nieGrajace = document.getElementsByClassName("nie_grajace_druzyny");
   const grajace = document.getElementsByClassName("grajace_druzyny");
   for(let checkBox of nieGrajace) checkBox.style.display = "none";
   for(let checkBox of grajace) checkBox.style.display = "none";
-
   const submitUsun = document.getElementById("submit_druzyny_usun");
   const submitGlos = document.getElementById("submit_druzyny_zglos");
   const submitWycofaj = document.getElementById("submit_druzyny_wycofaj");
@@ -69,17 +73,19 @@ function hideAllActions() {
 }
 
 function usunDruzyne() {
-  const submitBtn = document.getElementById("submit_druzyny_usun");
   if(submitBtn && submitBtn.style.display === "block") {
     hideAllActions();
   } else {
     hideAllActions();
     const checkBoxes = document.getElementsByClassName("nie_grajace_druzyny");
+    const submitBtn = document.getElementById("submit_druzyny_usun");
+    const resetBtn = document.getElementById("reset_druzyny");
+    if(resetBtn) resetBtn.style.display = "block";
+    if(submitBtn) submitBtn.style.display = "block";
     for(let checkBox of checkBoxes) checkBox.style.display = "block";
     if(submitBtn) submitBtn.style.display = "block";
     document.getElementById("form_druzyny").action="../actions/usun_druzyna.php";
   }
-  resetDruzyna();
 }
 
 function zglosDruzyne() {
@@ -89,25 +95,31 @@ function zglosDruzyne() {
   } else {
     hideAllActions();
     const checkBoxes = document.getElementsByClassName("nie_grajace_druzyny");
+    const submitBtn = document.getElementById("submit_druzyny_zglos");
+    const resetBtn = document.getElementById("reset_druzyny");
+    if(resetBtn) resetBtn.style.display = "block";
+    if(submitBtn) submitBtn.style.display = "block";
     for(let checkBox of checkBoxes) checkBox.style.display = "block";
     if(submitBtn) submitBtn.style.display = "block";
     document.getElementById("form_druzyny").action="../actions/zglos_druzyna.php";
+    resetDruzyna();
   }
-  resetDruzyna();
 }
 
 function wycofajDruzyne() {
-  const submitBtn = document.getElementById("submit_druzyny_wycofaj");
   if(submitBtn && submitBtn.style.display === "block") {
     hideAllActions();
   } else {
     hideAllActions();
     const checkBoxes = document.getElementsByClassName("grajace_druzyny");
+    const resetBtn = document.getElementById("reset_druzyny");
+    const submitBtn = document.getElementById("submit_druzyny_wycofaj");
+    if(resetBtn) resetBtn.style.display = "block";
     for(let checkBox of checkBoxes) checkBox.style.display = "block";
     if(submitBtn) submitBtn.style.display = "block";
     document.getElementById("form_druzyny").action="../actions/wycofaj_druzyna.php";
+    resetDruzyna();
   }
-  resetDruzyna();
 }
 
 function dodajDruzyne() {
@@ -121,6 +133,8 @@ function dodajDruzyne() {
   const resetBtn = document.getElementById("reset_druzyny");
   resetBtn.style.display === "none";
 }
+
+// Funkcje dla turnieju
 function dodajTurniej() {
   const form = document.getElementsByClassName("dodaj_turniej_form")[0];
   const form2 = document.getElementById("turniej_select_form");
@@ -128,8 +142,8 @@ function dodajTurniej() {
   if(form2.style.display === "block"){
     form2.style.display = "none";
   }
-
 }
+
 function zmienTurniej() {
   const form = document.getElementById("turniej_select_form");
   form.style.display = form.style.display === "none" ? "block" : "none";
@@ -137,4 +151,59 @@ function zmienTurniej() {
   if(form2.style.display === "block"){
     form2.style.display = "none";
   }
+}
+
+// Funkcje dla sędziów
+function dodajSedziego() {
+  const form = document.getElementById("dodaj_sedziego_form");
+  if(form.style.display === "block") {
+    HideAllSedziowieActions();
+  } else {
+    HideAllSedziowieActions();
+  form.style.display = form.style.display === "none" ? "block" : "none";
+  }
+}
+function usunSedziego() {
+  const checkBoxes = document.getElementsByClassName("sedzia_checkbox");
+  const submitBtn = document.getElementById("submit_usun_sedziego");
+  const resetBtn = document.getElementById("reset_sedziego");
+  const form = document.getElementById("sedzia_form");
+  if(checkBoxes[0].style.display === "block") {
+    HideAllSedziowieActions();
+  } else {
+    HideAllSedziowieActions();
+    if(form) form.action="../actions/usun_sedzia.php";
+    if(resetBtn) resetBtn.style.display = "block";
+    checkBoxes.forEach(cb => cb.style.display = "block");
+    submitBtn.style.display = "none";
+  }
+}
+function edytujSedziego() {
+  const radioBoxes = document.getElementsByClassName("sedzia_radio");
+  const submitBtn = document.getElementById("submit_edytuj_sedziego");
+  const resetBtn = document.getElementById("reset_sedziego");
+  const form = document.getElementById("sedzia_form");
+  if(radioBoxes[0].style.display === "block") {
+    HideAllSedziowieActions();
+  } else {
+    HideAllSedziowieActions();
+    radioBoxes.forEach(cb => cb.style.display = "block");
+    if(submitBtn) submitBtn.style.display = "block";
+    if(form) form.action="../actions/edytuj_sedzia.php";
+    if(resetBtn) resetBtn.style.display = "block";
+  }
+}
+function HideAllSedziowieActions() {
+  const checkBoxes = document.querySelectorAll("input[name='sedzia_id[]']");
+  const radioBoxes = document.querySelectorAll("input[name='sedzia_id']");
+  const submitUsun = document.getElementById("submit_usun_sedziego");
+  const submitEdytuj = document.getElementById("submit_edytuj_sedziego");
+  const dodajForm = document.getElementById("dodaj_sedziego_form");
+  const resetBtn = document.getElementById("reset_sedziego");
+  if(resetBtn) resetBtn.style.display = "none";
+  if(dodajForm) dodajForm.style.display = "none";
+  checkBoxes.forEach(cb => cb.style.display = "none");
+  radioBoxes.forEach(cb => cb.style.display = "none");
+  if(submitUsun) submitUsun.style.display = "none";
+  if(submitEdytuj) submitEdytuj.style.display = "none";
 }
