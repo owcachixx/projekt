@@ -2,8 +2,8 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Mar 09, 2026 at 12:13 PM
+-- Host: 127.0.0.1
+-- Generation Time: Mar 09, 2026 at 11:44 AM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `rozgrywki`
+-- Database: `2`
 --
 
 -- --------------------------------------------------------
@@ -31,32 +31,6 @@ CREATE TABLE `druzyna` (
   `id` int(11) NOT NULL,
   `nazwa` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
-
---
--- Dumping data for table `druzyna`
---
-
-INSERT INTO `druzyna` (`id`, `nazwa`) VALUES
-(1, 'Orły Warszawa'),
-(2, 'Tygrysy Kraków'),
-(3, 'Wilki Gdańsk'),
-(4, 'Lwy Poznań'),
-(5, 'Sokoły Wrocław'),
-(6, 'Pantery Łódź'),
-(7, 'Jastrzębie Lublin'),
-(8, 'Rekiny Szczecin'),
-(9, 'Borsuki Białystok'),
-(10, 'Smoki Katowice'),
-(11, 'Pumy Rzeszów'),
-(12, 'Lamparty Toruń'),
-(13, 'Mustangi Kielce'),
-(14, 'Bawoly Olsztyn'),
-(15, 'Krokodyle Opole'),
-(16, 'Husaria Radom'),
-(17, 'Rycerze Tarnów'),
-(18, 'Spartanie Koszalin'),
-(19, 'Wikingowie Sopot'),
-(20, 'Gladiatorzy Elbląg');
 
 -- --------------------------------------------------------
 
@@ -87,37 +61,6 @@ CREATE TABLE `sedzia` (
   `imie` varchar(255) NOT NULL,
   `nazwisko` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
-
---
--- Dumping data for table `sedzia`
---
-
-INSERT INTO `sedzia` (`id`, `imie`, `nazwisko`) VALUES
-(1, 'Jan', 'Kowalski'),
-(2, 'Piotr', 'Nowak'),
-(3, 'Adam', 'Wiśniewski'),
-(4, 'Tomasz', 'Wójcik'),
-(5, 'Paweł', 'Kowalczyk'),
-(6, 'Marek', 'Kamiński'),
-(7, 'Krzysztof', 'Lewandowski'),
-(8, 'Andrzej', 'Zieliński'),
-(9, 'Michał', 'Szymański'),
-(10, 'Grzegorz', 'Woźniak'),
-(11, 'Łukasz', 'Dąbrowski'),
-(12, 'Mateusz', 'Kozłowski'),
-(13, 'Sebastian', 'Jankowski'),
-(14, 'Rafał', 'Mazur'),
-(15, 'Damian', 'Krawczyk'),
-(16, 'Karol', 'Piotrowski'),
-(17, 'Patryk', 'Grabowski'),
-(18, 'Norbert', 'Pawlak'),
-(19, 'Artur', 'Michalski'),
-(20, 'Dariusz', 'Król'),
-(21, 'Robert', 'Wieczorek'),
-(22, 'Szymon', 'Wróbel'),
-(23, 'Daniel', 'Stępień'),
-(24, 'Igor', 'Baran'),
-(25, 'Filip', 'Czarnecki');
 
 -- --------------------------------------------------------
 
@@ -198,7 +141,7 @@ ALTER TABLE `udzial`
 -- AUTO_INCREMENT for table `druzyna`
 --
 ALTER TABLE `druzyna`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `mecz`
@@ -210,7 +153,7 @@ ALTER TABLE `mecz`
 -- AUTO_INCREMENT for table `sedzia`
 --
 ALTER TABLE `sedzia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `turniej`
