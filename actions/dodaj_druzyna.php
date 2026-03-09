@@ -4,6 +4,7 @@ if(isset($_POST['nazwa'])){
     $nazwa = $_POST['nazwa'];
     $sql = "INSERT INTO druzyna (nazwa) VALUES ('$nazwa')";
     mysqli_query($con,$sql);
-    header("Location: ../index.html");
 }
 mysqli_close($con);
+header("Location: ../index.html");
+
