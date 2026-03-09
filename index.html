@@ -9,12 +9,11 @@
 </head>
 <body>
 <div class="tabs">
-  <button class="tab-btn" onclick="openTab(this,'tabs/druzyny.php')">Drużyny</button>
-  <button class="tab-btn" onclick="openTab(this,'tabs/sedziowie.php')">Sędziowie</button>
-  <button class="tab-btn" onclick="openTab(this,'tabs/turniej.html')">Turniej</button>
-  <button class="tab-btn" onclick="openTab(this,'tabs/drabina.html')">Tablica wyników</button>
+  <button class="tab-btn" data-file="tabs/druzyny.php">Drużyny</button>
+  <button class="tab-btn" data-file="tabs/sedziowie.php">Sędziowie</button>
+  <button class="tab-btn" data-file="tabs/turniej.html">Turniej</button>
+  <button class="tab-btn" data-file="tabs/drabina.html">Tablica wyników</button>
 </div>
-
 <div id="content"></div>
 <div id="turniej_wybor"></div>
 <script>
@@ -24,9 +23,7 @@ fetch("turniej_select.php", { credentials: 'same-origin' })
     document.getElementById("turniej_wybor").innerHTML = data;
   });
 </script>
-<script>
-document.querySelector(".tab-btn").click();
-</script>
-</body>
 
+</body>
 </html>
+
