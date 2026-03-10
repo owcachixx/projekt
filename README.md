@@ -1,4 +1,4 @@
-# Projekt
+# Projekt - zarzadanie rozgrywkami
 
 System do zarządzania meczami podczas turnieju siatkówki, umożliwiający obsługę drużyn, sędziów i turniejów w prosty i intuicyjny sposób.
 
