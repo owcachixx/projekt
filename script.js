@@ -168,30 +168,46 @@ function usunSedziego() {
   const submitBtn = document.getElementById("submit_usun_sedziego");
   const resetBtn = document.getElementById("reset_sedziego");
   const form = document.getElementById("sedzia_form");
-  if(checkBoxes[0].style.display === "block") {
+  if (window.getComputedStyle(submitBtn).display === "block") {
     HideAllSedziowieActions();
-  } else {
-    HideAllSedziowieActions();
-    if(form) form.action="../actions/usun_sedzia.php";
-    if(resetBtn) resetBtn.style.display = "block";
-    checkBoxes.forEach(cb => cb.style.display = "block");
-    submitBtn.style.display = "none";
+    return;
   }
+  HideAllSedziowieActions();
+  const labels = document.querySelectorAll("label[data-imie][data-nazwisko]");
+  labels.forEach((label, index) => {
+    if (checkBoxes[index]) {
+      label.htmlFor = checkBoxes[index].id;
+    }
+  });
+  if (form) form.action = "../actions/usun_sedzia.php";
+  if (resetBtn) resetBtn.style.display = "block";
+  for (let cb of checkBoxes) {
+    cb.style.display = "block";
+  }
+  submitBtn.style.display = "block";
 }
 function edytujSedziego() {
   const radioBoxes = document.getElementsByClassName("sedzia_radio");
   const submitBtn = document.getElementById("submit_edytuj_sedziego");
   const resetBtn = document.getElementById("reset_sedziego");
   const form = document.getElementById("sedzia_form");
-  if(radioBoxes[0].style.display === "block") {
+  if (window.getComputedStyle(submitBtn).display === "block") {
     HideAllSedziowieActions();
-  } else {
-    HideAllSedziowieActions();
-    radioBoxes.forEach(cb => cb.style.display = "block");
-    if(submitBtn) submitBtn.style.display = "block";
-    if(form) form.action="../actions/edytuj_sedzia.php";
-    if(resetBtn) resetBtn.style.display = "block";
+    return;
   }
+  HideAllSedziowieActions();
+  const labels = document.querySelectorAll("label[data-imie][data-nazwisko]");
+  labels.forEach((label, index) => {
+    if (radioBoxes[index]) {
+      label.htmlFor = radioBoxes[index].id;
+    }
+  });
+  for (let rb of radioBoxes) {
+    rb.style.display = "block";
+  }
+  if (form) form.action = "";
+  if (submitBtn) submitBtn.style.display = "block";
+  if (resetBtn) resetBtn.style.display = "block";
 }
 function HideAllSedziowieActions() {
   const checkBoxes = document.querySelectorAll("input[name='sedzia_id[]']");
@@ -202,8 +218,25 @@ function HideAllSedziowieActions() {
   const resetBtn = document.getElementById("reset_sedziego");
   if(resetBtn) resetBtn.style.display = "none";
   if(dodajForm) dodajForm.style.display = "none";
-  checkBoxes.forEach(cb => cb.style.display = "none");
-  radioBoxes.forEach(cb => cb.style.display = "none");
+  for(let cb of checkBoxes){
+    cb.style.display = "none";
+  }
+  for(let cb of radioBoxes){
+    cb.style.display = "none";
+  }
   if(submitUsun) submitUsun.style.display = "none";
   if(submitEdytuj) submitEdytuj.style.display = "none";
+}
+function edytujForm() {
+  const formSection = document.getElementById
+  ("edytuj_sedziego_section");
+  const selected = document.querySelector(".sedzia_radio:checked");
+  const label = document.querySelector(`label[for="${selected.id}"]`);
+  const imie = label.dataset.imie;
+  const nazwisko = label.dataset.nazwisko;
+  const id = selected.value;
+  document.getElementById("edytuj_imie").value = imie;
+  document.getElementById("edytuj_nazwisko").value = nazwisko;
+  document.getElementById("edytuj_sedzia_id").value = id;
+  formSection.style.display = "block";
 }
