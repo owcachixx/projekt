@@ -5,11 +5,11 @@ System do zarządzania meczami podczas turnieju siatkówki, umożliwiający obs�
 ---
 
 ## Spis treści
-- [[#O projekcie]]
-- [[#Aktualne funkcje]]
-- [[#Plany rozwoju]]
-- [[#Technologie]]
-- [[#Instalacja]]
+- [O projekcie](#o-projekcie)
+- [Aktualne funkcje](#aktualne-funkcje)
+- [Plany rozwoju](#plany-rozwoju)
+- [Technologie](#technologie)
+- [Instalacja](#instalacja)
 
 ---
 
