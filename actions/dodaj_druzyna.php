@@ -7,3 +7,4 @@ if(isset($_POST['nazwa'])){
     header("Location: ../index.html");
 }
 mysqli_close($con);
+header("Location: ../index.html");
