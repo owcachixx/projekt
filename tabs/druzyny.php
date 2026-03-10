@@ -1,16 +1,15 @@
 <?php session_start(); ?>
-<div class="przyciski"></div>
+<section class="buttons">
 <button class="dodaj_druzyne" onclick="dodajDruzyne()">Dodaj drużynę</button>
+<button class="usun_druzyne" onclick="usunDruzyne()">Usuń drużynę</button>
+<button class="zglos_druzyne" onclick="zglosDruzyne()">Zgłoś drużynę</button>
+<button class="wycofaj_druzyne" onclick="wycofajDruzyne()">Wycofaj drużynę</button>
 <form action="../actions/dodaj_druzyna.php" method="post" class="dodaj_druzyne_form" style="display: none;">
     <input type="text" placeholder="Nazwa drużyny" name="nazwa">
     <button type="submit">Dodaj</button>
 </form>
-<button class="usun_druzyne" onclick="usunDruzyne()">Usuń drużynę</button>
-<form>
-    
-</form>
-<button class="zglos_druzyne" onclick="zglosDruzyne()">Zgłoś drużynę</button>
-<button class="wycofaj_druzyne" onclick="wycofajDruzyne()">Wycofaj drużynę</button>
+</section>
+<section id="turniej_info">
 <form id="form_druzyny" method="post">
 <table style="border: 1px solid black;">
     <tr>
@@ -49,3 +48,4 @@
 <button type="submit" style="display: none;" id="submit_druzyny_zglos">Zgłoś</button>
 <button type="submit" style="display: none;" id="submit_druzyny_wycofaj">Wycofaj</button>
 </form>
+</section>
