@@ -14,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
   openTab(defaultTab, defaultTab.dataset.file);
 });
-
 function openTab(button, file) {
   document.querySelectorAll(".tab-btn").forEach(tab => tab.classList.remove("active"));
   button.classList.add("active");
@@ -33,7 +32,6 @@ function openTab(button, file) {
       document.getElementById("content").innerHTML = "<p>Nie udało się załadować zakładki.</p>";
     });
 }
-
 function setupFormHandler() {
   const forms = document.querySelectorAll("#content form");
   forms.forEach(form => {
@@ -43,23 +41,30 @@ function setupFormHandler() {
       e.preventDefault();
       const data = new FormData(form);
       fetch(form.action, { method: "POST", body: data, credentials: 'same-origin' })
-        .then(res => res.text())
+        .then(res => {
+          if(!res.ok) throw new Error("Błąd serwera: " + res.status);
+          return res.text();
+        })
         .then(resp => {
           console.log("Success:", resp);
           form.reset();
-          openTab(document.querySelector(".tab-btn.active"), document.querySelector(".tab-btn.active").dataset.file);
+          const activeTab = document.querySelector(".tab-btn.active");
+          openTab(activeTab, activeTab.dataset.file);
         })
-        .catch(err => console.error(err));
+        .catch(err => {
+          console.error(err);
+          alert("Wystąpił błąd podczas przetwarzania żądania.");
+        });
     });
   });
+  setupMeczSelects();
+  setupMeczSelectsSedzia();
 }
 
 // Funkcje dla drużyn 
 function hideAllActions() {
   const nieGrajace = document.getElementsByClassName("nie_grajace_druzyny");
   const grajace = document.getElementsByClassName("grajace_druzyny");
-  for(let checkBox of nieGrajace) checkBox.style.display = "none";
-  for(let checkBox of grajace) checkBox.style.display = "none";
   const submitUsun = document.getElementById("submit_druzyny_usun");
   const submitGlos = document.getElementById("submit_druzyny_zglos");
   const submitWycofaj = document.getElementById("submit_druzyny_wycofaj");
@@ -70,24 +75,23 @@ function hideAllActions() {
   if(submitGlos) submitGlos.style.display = "none";
   if(submitWycofaj) submitWycofaj.style.display = "none";
   if(dodajForm) dodajForm.style.display = "none";
+  for(let checkBox of nieGrajace) checkBox.style.display = "none";
+  for(let checkBox of grajace) checkBox.style.display = "none";
 }
-
 function usunDruzyne() {
+  const submitBtn = document.getElementById("submit_druzyny_usun");
   if(submitBtn && submitBtn.style.display === "block") {
     hideAllActions();
   } else {
     hideAllActions();
     const checkBoxes = document.getElementsByClassName("nie_grajace_druzyny");
-    const submitBtn = document.getElementById("submit_druzyny_usun");
     const resetBtn = document.getElementById("reset_druzyny");
     if(resetBtn) resetBtn.style.display = "block";
     if(submitBtn) submitBtn.style.display = "block";
     for(let checkBox of checkBoxes) checkBox.style.display = "block";
-    if(submitBtn) submitBtn.style.display = "block";
     document.getElementById("form_druzyny").action="../actions/usun_druzyna.php";
   }
 }
-
 function zglosDruzyne() {
   const submitBtn = document.getElementById("submit_druzyny_zglos");
   if(submitBtn && submitBtn.style.display === "block") {
@@ -100,38 +104,33 @@ function zglosDruzyne() {
     if(resetBtn) resetBtn.style.display = "block";
     if(submitBtn) submitBtn.style.display = "block";
     for(let checkBox of checkBoxes) checkBox.style.display = "block";
-    if(submitBtn) submitBtn.style.display = "block";
     document.getElementById("form_druzyny").action="../actions/zglos_druzyna.php";
-    resetDruzyna();
   }
 }
-
 function wycofajDruzyne() {
+  const submitBtn = document.getElementById("submit_druzyny_wycofaj");
   if(submitBtn && submitBtn.style.display === "block") {
     hideAllActions();
   } else {
     hideAllActions();
     const checkBoxes = document.getElementsByClassName("grajace_druzyny");
     const resetBtn = document.getElementById("reset_druzyny");
-    const submitBtn = document.getElementById("submit_druzyny_wycofaj");
     if(resetBtn) resetBtn.style.display = "block";
     for(let checkBox of checkBoxes) checkBox.style.display = "block";
     if(submitBtn) submitBtn.style.display = "block";
     document.getElementById("form_druzyny").action="../actions/wycofaj_druzyna.php";
-    resetDruzyna();
   }
 }
-
 function dodajDruzyne() {
   const form = document.getElementsByClassName("dodaj_druzyne_form")[0];
   if(form && form.style.display === "block") {
     hideAllActions();
   } else {
     hideAllActions();
+    const resetBtn = document.getElementById("reset_druzyny");
     if(form) form.style.display = "block";
+    if(resetBtn) resetBtn.style.display = "block";
   }
-  const resetBtn = document.getElementById("reset_druzyny");
-  resetBtn.style.display === "none";
 }
 
 // Funkcje dla turnieju
@@ -143,7 +142,6 @@ function dodajTurniej() {
     form2.style.display = "none";
   }
 }
-
 function zmienTurniej() {
   const form = document.getElementById("turniej_select_form");
   form.style.display = form.style.display === "none" ? "block" : "none";
@@ -152,7 +150,6 @@ function zmienTurniej() {
     form2.style.display = "none";
   }
 }
-
 // Funkcje dla sędziów
 function dodajSedziego() {
   const form = document.getElementById("dodaj_sedziego_form");
@@ -160,7 +157,7 @@ function dodajSedziego() {
     HideAllSedziowieActions();
   } else {
     HideAllSedziowieActions();
-  form.style.display = form.style.display === "none" ? "block" : "none";
+    form.style.display === "block";
   }
 }
 function usunSedziego() {
@@ -215,22 +212,23 @@ function HideAllSedziowieActions() {
   const submitUsun = document.getElementById("submit_usun_sedziego");
   const submitEdytuj = document.getElementById("submit_edytuj_sedziego");
   const dodajForm = document.getElementById("dodaj_sedziego_form");
+  const edytujSection = document.getElementById("edytuj_sedziego_section");
   const resetBtn = document.getElementById("reset_sedziego");
   if(resetBtn) resetBtn.style.display = "none";
-  if(dodajForm) dodajForm.style.display = "none";
-  for(let cb of checkBoxes){
-    cb.style.display = "none";
-  }
-  for(let cb of radioBoxes){
-    cb.style.display = "none";
-  }
   if(submitUsun) submitUsun.style.display = "none";
   if(submitEdytuj) submitEdytuj.style.display = "none";
+  if(dodajForm) dodajForm.style.display = "none";
+  if(edytujSection) edytujSection.style.display = "none";
+  for(let cb of checkBoxes) cb.style.display = "none";
+  for(let cb of radioBoxes) cb.style.display = "none";
 }
 function edytujForm() {
-  const formSection = document.getElementById
-  ("edytuj_sedziego_section");
   const selected = document.querySelector(".sedzia_radio:checked");
+  if(!selected) {
+    alert("Proszę wybrać sędziego do edycji.");
+    return;
+  }
+  const formSection = document.getElementById("edytuj_sedziego_section");
   const label = document.querySelector(`label[for="${selected.id}"]`);
   const imie = label.dataset.imie;
   const nazwisko = label.dataset.nazwisko;
@@ -240,6 +238,7 @@ function edytujForm() {
   document.getElementById("edytuj_sedzia_id").value = id;
   formSection.style.display = "block";
 }
+
 // Funkcje dla meczy
 function HideAllMeczeActions() {
   const druzyna1Select = document.getElementById("druzyna_1_select");
@@ -260,46 +259,50 @@ function dodajMecz() {
     if(dodajForm) dodajForm.style.display = "block";
   }
 }
-const druzyna1 = document.getElementById("druzyna_1_select");
-const druzyna2 = document.getElementById("druzyna_2_select");
-function updateSelects() {
-    const val1 = druzyna1.value;
-    const val2 = druzyna2.value;
-    for (let option of druzyna1.options) {
-        option.style.display = (option.value === val2) ? "none" : "block";
-    }
-    for (let option of druzyna2.options) {
-        option.style.display = (option.value === val1) ? "none" : "block";
-    }
-    if (val1 === val2) {
-        druzyna2.value = "";
-    }
+function setupMeczSelects() {
+  const druzyna1 = document.getElementById("druzyna_1_select");
+  const druzyna2 = document.getElementById("druzyna_2_select");
+  function updateSelects() {
+      const val1 = druzyna1.value;
+      const val2 = druzyna2.value;
+      for (let option of druzyna1.options) {
+          option.style.display = (option.value === val2) ? "none" : "block";
+      }
+      for (let option of druzyna2.options) {
+          option.style.display = (option.value === val1) ? "none" : "block";
+      }
+      if (val1 === val2) {
+          druzyna2.value = "";
+      }
+  }
+  druzyna1.addEventListener("change", updateSelects);
+  druzyna2.addEventListener("change", updateSelects);
 }
-druzyna1.addEventListener("change", updateSelects);
-druzyna2.addEventListener("change", updateSelects);
-const sedziaSelect = document.getElementById("sedzia_select");
-const asystent1Select = document.getElementById("asystent1_select");
-const asystent2Select = document.getElementById("asystent2_select");
-function updateSedziaSelects() {
-  const sedziaVal = sedziaSelect.value;
-  const asystent1Val = asystent1Select.value;
-  const asystent2Val = asystent2Select.value;
-  for (let option of sedziaSelect.options) {
-    option.style.display = (option.value === asystent1Val || option.value === asystent2Val) ? "none" : "block";
+function setupMeczSelectsSedzia() {
+  const sedziaSelect = document.getElementById("sedzia_select");
+  const asystent1Select = document.getElementById("sedzia_asystent_1_select");
+  const asystent2Select = document.getElementById("sedzia_asystent_2_select");
+  function updateSedziaSelects() {
+    const sedziaVal = sedziaSelect.value;
+    const asystent1Val = asystent1Select.value;
+    const asystent2Val = asystent2Select.value;
+    for (let option of sedziaSelect.options) {
+      option.style.display = (option.value === asystent1Val || option.value === asystent2Val) ? "none" : "block";
+    }
+    for (let option of asystent1Select.options) {
+      option.style.display = (option.value === sedziaVal || option.value === asystent2Val) ? "none" : "block";
+    }
+    for (let option of asystent2Select.options) {
+      option.style.display = (option.value === sedziaVal || option.value === asystent1Val) ? "none" : "block";
+    }
+    if (asystent1Val === sedziaVal) asystent1Select.value = "";
+    if (asystent2Val === sedziaVal) asystent2Select.value = "";
+    if (asystent1Val === asystent2Val) asystent2Select.value = "";
   }
-  for (let option of asystent1Select.options) {
-    option.style.display = (option.value === sedziaVal || option.value === asystent2Val) ? "none" : "block";
-  }
-  for (let option of asystent2Select.options) {
-    option.style.display = (option.value === sedziaVal || option.value === asystent1Val) ? "none" : "block";
-  }
-  if (asystent1Val === sedziaVal) asystent1Select.value = "";
-  if (asystent2Val === sedziaVal) asystent2Select.value = "";
-  if (asystent1Val === asystent2Val) asystent2Select.value = "";
+  sedziaSelect.addEventListener("change", updateSedziaSelects);
+  asystent1Select.addEventListener("change", updateSedziaSelects);
+  asystent2Select.addEventListener("change", updateSedziaSelects);
 }
-sedziaSelect.addEventListener("change", updateSedziaSelects);
-asystent1Select.addEventListener("change", updateSedziaSelects);
-asystent2Select.addEventListener("change", updateSedziaSelects);
 function usunMecz() {
   const checkBoxes = document.getElementsByClassName("mecz_checkbox");
   const submitBtn = document.getElementById("submit_usun_mecz");
@@ -349,13 +352,20 @@ function edytujMecz() {
   }
 }
 function edytujMeczForm() {
-  const formSection = document.getElementById("edytuj_mecz_section");
   const selected = document.querySelector(".mecz_radio:checked");
+  if(!selected) {
+    alert("Proszę wybrać mecz do edycji.");
+    return;
+  }
+  const formSection = document.getElementById("edytuj_mecz_section");
   const label = document.querySelector(`label[for="${selected.id}"]`);
   const id = selected.value;
-  const [druzyna1, druzyna2] = label.textContent.trim().split(" - ");
-  document.getElementById("edytuj_druzyna_1").value = druzyna1;
-  document.getElementById("edytuj_druzyna_2").value = druzyna2;
+  const row = label.closest("tr");
+  document.getElementById("edytuj_druzyna_1_select").value = row.dataset.druzyna1Id;
+  document.getElementById("edytuj_druzyna_2_select").value = row.dataset.druzyna2Id;
   document.getElementById("edytuj_mecz_id").value = id;
+  document.getElementById("edytuj_sedzia_select").value = row.dataset.sedziaId;
+  document.getElementById("edytuj_asystent_1_select").value = row.dataset.asystent1Id;
+  document.getElementById("edytuj_asystent_2_select").value = row.dataset.asystent2Id;
   formSection.style.display = "block";
 }
