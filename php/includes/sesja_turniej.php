@@ -1,5 +1,5 @@
 <?php
-session_start();
+include __DIR__."\php\includes\session.php";
 
 if (isset($_POST['turniej_id']) && $_POST['turniej_id'] !== "brak") {
     $_SESSION['turniej_id'] = $_POST['turniej_id'];
@@ -9,6 +9,6 @@ if (isset($_POST['turniej_id']) && $_POST['turniej_id'] !== "brak") {
     error_log("Session turniej_id cleared");
 }
 
-header("Location: ../index.html");
+header("Location: index.php");
 exit;
 ?>

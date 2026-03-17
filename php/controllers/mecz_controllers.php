@@ -1,7 +1,7 @@
 <?php
-require_once "../models/sedzia_model.php";
-require_once "../models/mecz_model.php";
-require_once "../models/druzyna_model.php";
+require_once __DIR__."/../models/sedzia_model.php";
+require_once __DIR__."/../models/mecz_model.php";
+require_once __DIR__."/../models/druzyna_model.php";
 
 function select_druzyna() {
     if(!isset($_SESSION['turniej_id'])){
@@ -50,7 +50,8 @@ function tabe_mecze() {
             while($row=mysqli_fetch_assoc($query)){
                 echo "<tr>
                 <td><input type='checkbox' class='mecz_checkbox' id='mecz_id_checkbox_$row[id]' name='mecz_id[]' value='$row[id]' style='display: none;'/>
-                <input type='radio' class='mecz_radio' id='mecz_id_$row[id]' name='mecz_id' value='$row[id]' style='display: none;' data-druzyna-1='$row[druzyna_1]' data-druzyna-2='$row[druzyna_2]' data-sedzia-id='$row[sedzia_id]' data-asystent1-id='$row[asystent1_id]' data-asystent2-id='$row[asystent2_id]'/>
+                <input type='radio' class='mecz_radio' id='mecz_id_$row[id]' name='mecz_id' value='$row[id]' style='display: none;' 
+                data-druzyna-1='$row[druzyna_1]' data-druzyna-2='$row[druzyna_2]' data-sedzia-id='$row[sedzia_id]' data-asystent1-id='$row[sedzia1_id]' data-asystent2-id='$row[sedzia2_id]' data-id='$row[id]'/>
                 <label for='mecz_id_$row[id]'>$row[druzyna_1]</label></td>
                 <td><label for='mecz_id_$row[id]'>$row[druzyna_2]</label></td>
                 <td><label for='mecz_id_$row[id]'>$row[wynik_druzyna_1] - $row[wynik_druzyna_2]</label></td>

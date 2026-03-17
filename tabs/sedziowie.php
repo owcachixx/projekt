@@ -1,0 +1,35 @@
+<?php
+include "../php/includes/session.php";
+include "../php/controllers/sedzia_controllers.php"
+?>
+<section id="sedziowie_actions" class="buttons">
+    <button id="dodaj_sedziego_btn" onclick="dodajSedziego()">Dodaj sędziego</button>
+    <button id="usun_sedziego_btn" onclick="usunSedziego()">Usuń sędziego</button>
+    <button id="edytuj_sedziego_btn" onclick="edytujSedziego()">Modyfikuj sędziego</button>
+    <form method="post" action="../php/actions/dodaj_sedzia.php" id="dodaj_sedziego_form" style="display: none;">
+        <input type="text" name="imie" placeholder="Imię">
+        <input type="text" name="nazwisko" placeholder="Nazwisko">
+        <button type="submit">Dodaj</button>
+    </form>
+</section>
+<section id="sedziowie_section">
+<form method="post" id="sedzia_form" class="sedziowie_form">
+<table style="border: 1px solid black;">
+    <tr>
+        <th colspan="3" style="border: 1px solid black;">Sędziowie</th>
+    </tr>
+        <?php pokaz_sedziow(); ?>
+</table>
+    <button type="reset" id="reset_sedziego" style="display: none;">Reset</button>
+    <button type="submit" id="submit_usun_sedziego" style="display: none;">Usuń</button>
+    <button type="button" id="submit_edytuj_sedziego" style="display: none;" onclick="edytujForm()">Modyfikuj</button>
+</form>
+</section>
+<section id="edytuj_sedziego_section" style="display: none;">
+    <h3>Edytuj sędziego</h3>
+    <form method="post" action="../php/actions/edytuj_sedzia.php" id="edytuj_sedziego_form">
+        <input type="hidden" name="sedzia_id" id="edytuj_sedzia_id">
+        <input type="text" name="imie" id="edytuj_imie" placeholder="Imię">
+        <input type="text" name="nazwisko" id="edytuj_nazwisko" placeholder="Nazwisko">
+        <button type="submit" onclick="">Zapisz</button>
+    </form>

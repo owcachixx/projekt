@@ -1,5 +1,5 @@
 <?php
-require_once "../includes/database.php";
+require_once "../php/includes/database.php";
 
 function pobierz_sedziow() {
     global $con;

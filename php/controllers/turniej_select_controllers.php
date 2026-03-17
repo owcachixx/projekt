@@ -1,6 +1,6 @@
 <?php 
-require_once "../models/turniej_model.php";
-require_once "../includes/session.php";
+require_once __DIR__."/../models/turniej_model.php";
+require_once __DIR__."/../includes/session.php";
 
 function wybrany_turniej() {
     if(isset($_SESSION['turniej_id'])){

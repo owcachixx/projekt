@@ -1,5 +1,5 @@
 <?php
-require_once "../includes/database.php";
+require_once __DIR__."/../includes/database.php";
 
 if(isset($_POST['sedzia_id'])) {
     $sedzia_ids = $_POST['sedzia_id'];
@@ -9,5 +9,5 @@ if(isset($_POST['sedzia_id'])) {
     }
 }
 mysqli_close($con);
-header("Location: ../index.html?tab=tabs%2Fsedziowie.php");
+header("Location: index.php?tab=tabs%2Fsedziowie.php");
 ?>

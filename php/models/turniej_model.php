@@ -1,5 +1,5 @@
 <?php
-require_once "../includes/database.php";
+require_once __DIR__."/../includes/database.php";
 
 function pobierz_turniej_by_id($turniej_id) {
     global $con;

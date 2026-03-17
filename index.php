@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turniej</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+<div class="tabs">
+  <button class="tab-btn" data-file="tabs/druzyny.php">Drużyny</button>
+  <button class="tab-btn" data-file="tabs/sedziowie.php">Sędziowie</button>
+  <button class="tab-btn" data-file="tabs/mecze.php">Mecze turnieu</button>
+  <button class="tab-btn" data-file="tabs/drabina.html">Tablica wyników</button>
+</div>
+<div id="content"></div>
+<div id="turniej_wybor">
+  <?php include "tabs/miniTab/turniej_select.php" ?>
+</div>
+
+</body>
+</html>
