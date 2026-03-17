@@ -7,3 +7,4 @@ function pobierz_sedziow() {
     $query=mysqli_query($con, $sql);
     return $query;
 }
+?>
