@@ -89,7 +89,7 @@ function usunDruzyne() {
     if(resetBtn) resetBtn.style.display = "block";
     if(submitBtn) submitBtn.style.display = "block";
     for(let checkBox of checkBoxes) checkBox.style.display = "block";
-    document.getElementById("form_druzyny").action="../actions/usun_druzyna.php";
+    document.getElementById("form_druzyny").action="/php/actions/usun_druzyna.php";
   }
 }
 function zglosDruzyne() {
@@ -157,7 +157,7 @@ function dodajSedziego() {
     HideAllSedziowieActions();
   } else {
     HideAllSedziowieActions();
-    form.style.display === "block";
+    form.style.display = "block";
   }
 }
 function usunSedziego() {
@@ -262,18 +262,19 @@ function dodajMecz() {
 function setupMeczSelects() {
   const druzyna1 = document.getElementById("druzyna_1_select");
   const druzyna2 = document.getElementById("druzyna_2_select");
+  if (!druzyna1 || !druzyna2) return;
   function updateSelects() {
-      const val1 = druzyna1.value;
-      const val2 = druzyna2.value;
-      for (let option of druzyna1.options) {
-          option.style.display = (option.value === val2) ? "none" : "block";
-      }
-      for (let option of druzyna2.options) {
-          option.style.display = (option.value === val1) ? "none" : "block";
-      }
-      if (val1 === val2) {
-          druzyna2.value = "";
-      }
+    const val1 = druzyna1.value;
+    const val2 = druzyna2.value;
+    for (let option of druzyna1.options) {
+      option.style.display = (option.value === val2) ? "none" : "block";
+    }
+    for (let option of druzyna2.options) {
+      option.style.display = (option.value === val1) ? "none" : "block";
+    }
+    if (val1 === val2) {
+      druzyna2.value = "";
+    }
   }
   druzyna1.addEventListener("change", updateSelects);
   druzyna2.addEventListener("change", updateSelects);
@@ -282,6 +283,7 @@ function setupMeczSelectsSedzia() {
   const sedziaSelect = document.getElementById("sedzia_select");
   const asystent1Select = document.getElementById("sedzia_asystent_1_select");
   const asystent2Select = document.getElementById("sedzia_asystent_2_select");
+  if (!sedziaSelect || !asystent1Select || !asystent2Select) return;
   function updateSedziaSelects() {
     const sedziaVal = sedziaSelect.value;
     const asystent1Val = asystent1Select.value;

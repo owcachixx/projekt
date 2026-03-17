@@ -1,18 +1,19 @@
 <?php
     include "../php/controllers/mecz_controllers.php";
-    include "../php/models/sedzia_model.php"
+    include "../php/controllers/get_sedziowie.php";
+    include "../php/includes/session.php";
 ?>
 <section>
     <button id="dodaj_mecz_btn" onclick="dodajMecz()">Dodaj mecz</button>
     <button id="usun_mecz_btn" onclick="usunMecz()">Usuń mecz</button>
     <button id="edytuj_mecz_btn" onclick="edytujMecz()">Modyfikuj mecz</button>
     <button id="generuj_mecze_btn" onclick="generujMecze()">Generuj mecze</button>
-    <form method="post" action="../actions/dodaj_mecz.php" id="dodaj_mecz_form" style="display: none;">
+    <form method="post" action="../php/actions/dodaj_mecz.php" id="dodaj_mecz_form" style="display: none;">
         <select name="druzyna_1" id="druzyna_1_select">
-            <?php select_druzyna() ?>
+            <?php select_druzyna(); ?>
         </select>
         <select name="druzyna_2" id="druzyna_2_select">
-            <?php select_druzyna() ?>
+            <?php select_druzyna(); ?>
         </select>
         <select name="sedzia" id="sedzia_select">
             <?php sendzia_select($sedziowie); ?>
@@ -25,7 +26,7 @@
         </select>
         <button type="submit">Dodaj</button>
     </form>
-    <form method="post" action="../actions/generuj_mecze.php" id="generuj_mecze_form" style="display: none;">
+    <form method="post" action="../php/actions/generuj_mecze.php" id="generuj_mecze_form" style="display: none;">
         <input type="hidden" name="turniej_id" value="<?php echo $_SESSION['turniej_id']; ?>">
         <input type="number" name="liczba_meczy_jednoczesnie" placeholder="Liczba meczy jednocześnie" min="1" max="10" required>
         <select name="sedzia" id="generuj_sedzia_select" multiple>
@@ -54,7 +55,7 @@
 </section>
 <section id="edytuj_mecz_section" style="display: none;">
     <h3>Edytuj mecz</h3>
-    <form method="post" action="../actions/edytuj_mecz.php" id="edytuj_mecz_form">
+    <form method="post" action="../php/actions/edytuj_mecz.php" id="edytuj_mecz_form">
         <input type="hidden" name="mecz_id" id="edytuj_mecz_id">
         <select name="druzyna_1" id="edytuj_druzyna_1_select">
             <?php select_druzyna_edit(); ?>

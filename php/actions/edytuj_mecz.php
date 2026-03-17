@@ -1,6 +1,6 @@
 <?php
 if(isset($_POST['druzyna_1']) && isset($_POST['druzyna_2']) && isset($_POST['turniej']) && isset($_POST['sedzia']) && isset($_POST['sedzia_asystent_1']) && isset($_POST['sedzia_asystent_2']) && isset($_POST['wynik_druzyna_1']) && isset($_POST['wynik_druzyna_2']) && isset($_POST['mecz_id'])){
-    require_once "../includes/database.php";
+    require_once __DIR__."/../includes/database.php";
     $druzyna_1 = $_POST['druzyna_1'];
     $druzyna_2 = $_POST['druzyna_2'];
     $turniej = $_POST['turniej'];
@@ -14,5 +14,5 @@ if(isset($_POST['druzyna_1']) && isset($_POST['druzyna_2']) && isset($_POST['tur
     mysqli_query($con,$sql);
     mysqli_close($con);
 }
-header("Location: ../index.html?tab=tabs%2Fmecze.php");
+header("Location: index.php?tab=tabs%2Fmecze.php");
 ?>

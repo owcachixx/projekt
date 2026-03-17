@@ -1,5 +1,5 @@
 <?php
-require_once "../includes/database.php";
+require_once __DIR__."/../includes/database.php";
 session_start();
 if(isset($_SESSION['turniej_id']) && !empty($_POST)){
     $ids = [];
@@ -21,6 +21,6 @@ if(isset($_SESSION['turniej_id']) && !empty($_POST)){
     }
 }
 mysqli_close($con);
-header("Location: ../index.html");
+header("Location: index.php");
 exit;
 ?>

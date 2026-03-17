@@ -1,5 +1,5 @@
 <?php
-require_once "../models/druzyna_model.php";
+require_once __DIR__."/../models/druzyna_model.php";
 
 function pokaz_pule_druzyn() {
     $query=pobierz_druzyna();

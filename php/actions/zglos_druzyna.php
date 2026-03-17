@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "../includes/database.php";
+require_once __DIR__."/../includes/database.php";
 
 if(isset($_SESSION['turniej_id'])){
     foreach($_POST as $key => $value){
@@ -15,6 +15,6 @@ if(isset($_SESSION['turniej_id'])){
     }
 }
 
-header("Location: ../index.html");
+header("Location: index.php");
 exit;
 ?>

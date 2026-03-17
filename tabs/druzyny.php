@@ -1,13 +1,13 @@
 <?php 
 include "../php/includes/session.php";
-include "../php/models/druzyna_model.php";
+include "../php/controllers/druzyna_controllers.php";
 ?>
 <section class="buttons">
 <button class="dodaj_druzyne" onclick="dodajDruzyne()">Dodaj drużynę</button>
 <button class="usun_druzyne" onclick="usunDruzyne()">Usuń drużynę</button>
 <button class="zglos_druzyne" onclick="zglosDruzyne()">Zgłoś drużynę</button>
 <button class="wycofaj_druzyne" onclick="wycofajDruzyne()">Wycofaj drużynę</button>
-<form action="../actions/dodaj_druzyna.php" method="post" class="dodaj_druzyne_form" style="display: none;">
+<form action="../php/actions/dodaj_druzyna.php" method="post" class="dodaj_druzyne_form" style="display: none;">
     <input type="text" placeholder="Nazwa drużyny" name="nazwa">
     <button type="submit">Dodaj</button>
 </form>

@@ -1,5 +1,5 @@
 <?php
-require_once "../models/sedzia_model.php";
+require_once __DIR__."/../models/sedzia_model.php";
 
 function pokaz_sedziow() {
     $query=pobierz_sedziow();

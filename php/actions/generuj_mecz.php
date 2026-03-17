@@ -1,5 +1,5 @@
 <?php
-require_once "../includes/database.php";
+require_once __DIR__."/../includes/database.php";
 if(isset($_POST['turniej_id'], $_POST['liczba_meczy_jednoczesnie'], $_POST['sedzia']) && is_array($_POST['sedzia'])){
     $turniej_id = intval($_POST['turniej_id']);
     $liczba_meczy_jednoczesnie = intval($_POST['liczba_meczy_jednoczesnie']);
@@ -44,8 +44,7 @@ if(isset($_POST['turniej_id'], $_POST['liczba_meczy_jednoczesnie'], $_POST['sedz
         $asystent2 = array_shift($pula_sedziow);
         $druzyna1 = intval($mecz['druzyna_1']);
         $druzyna2 = $mecz['druzyna_2'] !== null ? intval($mecz['druzyna_2']) : "NULL";
-        $sql_insert = "INSERT INTO mecz 
-        (druzyna_1, druzyna_2, sedzia_id, asystent1_id, asystent2_id) VALUES ($druzyna1, $druzyna2, $sedzia, $asystent1, $asystent2)";
+        $sql_insert = "INSERT INTO mecz (druzyna_1, druzyna_2, sedzia, sedzia_asystent_1, sedzia_asystent_2, turniej_id) VALUES ($druzyna1, $druzyna2, $sedzia, $asystent1, $asystent2, $_SESSION[turniej_id])";
         $query_insert = mysqli_query($con, $sql_insert);
         if(!$query_insert){
             error_log("Błąd zapytania: " . mysqli_error($con));
@@ -58,5 +57,5 @@ if(isset($_POST['turniej_id'], $_POST['liczba_meczy_jednoczesnie'], $_POST['sedz
     error_log("Nieprawidłowe dane wejściowe do generowania meczy.");
 }
 mysqli_close($con);
-header("Location: ../index.html?tab=tabs%2Fmecze.php");
+header("Location: index.php?tab=tabs%2Fmecze.php");
 ?>
