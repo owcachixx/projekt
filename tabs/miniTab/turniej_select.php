@@ -1,31 +1,15 @@
 <?php
-session_start();
-require_once "includes/database.php";
+include "../php/controllers/turniej_select_controllers.php"
 ?>
 <h3>
-<?php 
-if(isset($_SESSION['turniej_id'])){
-    $sql="SELECT * FROM turniej WHERE id = ".$_SESSION['turniej_id'];
-    $query=mysqli_query($con,$sql);
-    $row=mysqli_fetch_assoc($query);
-    echo "Turniej: ".$row['nazwa']."<br>Data: ".$row['data'];
-} else {
-    echo "nie wybrano turnieju";
-}
-?>
+<?php wybrany_turniej(); ?>
 </h3>
 <button onclick="zmienTurniej()">Zmień turniej</button>
 <button onclick="dodajTurniej()">Dodaj turniej</button>
 <form method="post" action="includes/sesja_turniej.php" id="turniej_select_form" style="display: none;">
     <select name="turniej_id">
         <option value="brak">Brak</option>
-        <?php
-            $sql="SELECT * FROM turniej";
-            $query=mysqli_query($con,$sql);
-            while($row=mysqli_fetch_assoc($query)){
-                echo "<option value='$row[id]'>$row[nazwa] - $row[data]</option>";
-            }
-        ?>
+        <?php select_turniej(); ?>
     </select>
     <button type="submit">Wybierz</button>
 </form>

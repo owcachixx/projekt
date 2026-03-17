@@ -7,7 +7,5 @@ if(isset($_POST['nazwa_turnieju']) && isset($_POST['data_turnieju'])){
     mysqli_query($con,$sql);
     mysqli_close($con);
 }
-mysqli_close($con);
 header("Location: ../index.html");
 ?>
-
