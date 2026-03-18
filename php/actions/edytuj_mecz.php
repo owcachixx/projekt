@@ -14,5 +14,4 @@ if(isset($_POST['druzyna_1']) && isset($_POST['druzyna_2']) && isset($_POST['tur
     mysqli_query($con,$sql);
     mysqli_close($con);
 }
-header("Location: index.php?tab=tabs%2Fmecze.php");
 ?>

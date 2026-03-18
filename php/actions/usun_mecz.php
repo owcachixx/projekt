@@ -8,5 +8,4 @@ if(isset($_POST['mecz_id'])){
     }
     mysqli_close($con);
 }
-header("Location: index.php?tab=tabs%2Fmecze.php");
 ?>

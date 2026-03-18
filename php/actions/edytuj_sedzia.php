@@ -8,5 +8,4 @@ if(isset($_POST['sedzia_id']) && isset($_POST['imie']) && isset($_POST['nazwisko
     mysqli_query($con,$sql);
     mysqli_close($con);
 }
-header("Location: index.php?tab=tabs%2Fsedziowie.php");
 ?>
