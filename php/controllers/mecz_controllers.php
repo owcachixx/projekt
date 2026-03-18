@@ -19,7 +19,7 @@ function select_druzyna() {
     }
 }
 
-function sendzia_select($sedziowie) {
+function sedzia_select($sedziowie) {
     foreach($sedziowie as $row): 
         ?><option value="<?= $row['id'] ?>"><?= $row['imie'] . ' ' . $row['nazwisko'] ?></option>
     <?php endforeach;
@@ -42,10 +42,13 @@ function select_druzyna_edit() {
     }
 }
 
-function tabe_mecze() {
+function table_mecze() {
     $query=pobierz_mecz();
-        if(!$query){
-            error_log("Błąd zapytania: ".pobierz_mecz());
+    if(!$query){
+        error_log("Błąd zapytania: ".pobierz_mecz());
+    }else{
+        if(mysqli_num_rows($query) == 0){
+        echo "<tr><td colspan='6' id='brak_mecz'>Nie ma jeszcze meczy w turnieju.</td></tr>";
         }else{
             while($row=mysqli_fetch_assoc($query)){
                 echo "<tr>
@@ -61,5 +64,14 @@ function tabe_mecze() {
                 </tr>";
             }
         }
+    }
+}
+
+function session_turniej() {
+    if(isset($_SESSION["turniej_id"])){
+        return $_SESSION["turniej_id"];
+    }else{
+        return;
+    }
 }
 ?>
