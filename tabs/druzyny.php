@@ -22,7 +22,7 @@ include "../php/controllers/druzyna_controllers.php";
 </table>
 <table style="border: 1px solid black;">
     <th colspan="2" style="border: 1px solid black;"><?php echo isset($_SESSION['turniej_id']) ? 'Drużyny grające' : 'Wybierz turniej, aby zobaczyć drużyny.'; ?></th>
-    <?php pokaz_druzyny_turjeju($_SESSION['turniej_id']); ?>
+    <?php pokaz_druzyny_turjeju(); ?>
 </table>
 <button type="reset" style="display: none;" id="reset_druzyny">Reset</button>
 <button type="submit" style="display: none;" id="submit_druzyny_usun">Usuń</button>
