@@ -9,10 +9,17 @@ function pobierz_druzyna() {
 }
 
 function pobierz_druzyny_turniej() {
-    $turniej_id=isset($_SESSION['turniej_id']) ? $_SESSION['turniej_id'] : null;
     global $con;
-    $sql="SELECT druzyna.* FROM druzyna JOIN udzial ON druzyna.id = udzial.id_druzyna WHERE udzial.id_turniej = $turniej_id";
-    $query=mysqli_query($con, $sql);
+    if (!isset($_SESSION['turniej_id'])) {
+        error_log("Brak turniej_id w sesji!");
+        return false;
+    }
+    $turniej_id = intval($_SESSION['turniej_id']);
+    $sql = "SELECT druzyna.* FROM druzyna JOIN udzial ON druzyna.id = udzial.id_druzyna WHERE udzial.id_turniej = $turniej_id";
+    $query = mysqli_query($con, $sql);
+    if (!$query) {
+        error_log("Błąd SQL: " . mysqli_error($con));
+    }
     return $query;
 }
 
