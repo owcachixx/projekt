@@ -6,5 +6,4 @@ if(isset($_POST['nazwa'])){
     mysqli_query($con,$sql);
 }
 mysqli_close($con);
-header("Location: projekt/index.php");
 ?>
