@@ -104,7 +104,7 @@ function zglosDruzyne() {
     if(resetBtn) resetBtn.style.display = "block";
     if(submitBtn) submitBtn.style.display = "block";
     for(let checkBox of checkBoxes) checkBox.style.display = "block";
-    document.getElementById("form_druzyny").action="../actions/zglos_druzyna.php";
+    document.getElementById("form_druzyny").action="../php/actions/zglos_druzyna.php";
   }
 }
 function wycofajDruzyne() {
@@ -118,7 +118,7 @@ function wycofajDruzyne() {
     if(resetBtn) resetBtn.style.display = "block";
     for(let checkBox of checkBoxes) checkBox.style.display = "block";
     if(submitBtn) submitBtn.style.display = "block";
-    document.getElementById("form_druzyny").action="../actions/wycofaj_druzyna.php";
+    document.getElementById("form_druzyny").action="../php/actions/wycofaj_druzyna.php";
   }
 }
 function dodajDruzyne() {
@@ -127,9 +127,7 @@ function dodajDruzyne() {
     hideAllActions();
   } else {
     hideAllActions();
-    const resetBtn = document.getElementById("reset_druzyny");
     if(form) form.style.display = "block";
-    if(resetBtn) resetBtn.style.display = "block";
   }
 }
 
@@ -176,7 +174,7 @@ function usunSedziego() {
       label.htmlFor = checkBoxes[index].id;
     }
   });
-  if (form) form.action = "../actions/usun_sedzia.php";
+  if (form) form.action = "../php/actions/usun_sedzia.php";
   if (resetBtn) resetBtn.style.display = "block";
   for (let cb of checkBoxes) {
     cb.style.display = "block";
@@ -244,19 +242,40 @@ function HideAllMeczeActions() {
   const druzyna1Select = document.getElementById("druzyna_1_select");
   const druzyna2Select = document.getElementById("druzyna_2_select");
   const submitBtn = document.getElementById("submit_dodaj_mecz");
+  const resetAddBtn = document.getElementById("reset_dodaj_mecz");
   const resetBtn = document.getElementById("reset_mecz");
-  if(resetBtn) resetBtn.style.display = "none";
-  if(submitBtn) submitBtn.style.display = "none";
-  if(druzyna1Select) druzyna1Select.style.display = "none";
-  if(druzyna2Select) druzyna2Select.style.display = "none";
+  const dodajForm = document.getElementById("dodaj_mecz_form");
+  const generateForm = document.getElementById("generuj_mecze_form");
+  const wybierzTurniej = document.getElementsByClassName("wybierz_turniej");
+  if (resetBtn) resetBtn.style.display = "none";
+  if (resetAddBtn) resetAddBtn.style.display = "none";
+  if (submitBtn) submitBtn.style.display = "none";
+  if (druzyna1Select) druzyna1Select.style.display = "none";
+  if (druzyna2Select) druzyna2Select.style.display = "none";
+  if (dodajForm) dodajForm.style.display = "none";
+  if (generateForm) generateForm.style.display = "none";
+  for (let el of wybierzTurniej) {
+    el.style.display = "none";
+  }
 }
 function dodajMecz() {
   const dodajForm = document.getElementById("dodaj_mecz_form");
-  if(dodajForm.style.display === "block") {
+  if (!dodajForm) return;
+  if (window.getComputedStyle(dodajForm).display === "block") {
     HideAllMeczeActions();
   } else {
     HideAllMeczeActions();
-    if(dodajForm) dodajForm.style.display = "block";
+    const wybierzTurniej = document.getElementById("dodaj_wybierz_turniej");
+    const druzyna1 = document.getElementById("druzyna_1_select");
+    const druzyna2 = document.getElementById("druzyna_2_select");
+    const submitBtn = document.getElementById("submit_dodaj_mecz");
+    const resetBtn = document.getElementById("reset_dodaj_mecz");
+    if (wybierzTurniej) wybierzTurniej.style.display = "block";
+    if (dodajForm) dodajForm.style.display = "block";
+    if (druzyna1) druzyna1.style.display = "block";
+    if (druzyna2) druzyna2.style.display = "block";
+    if (submitBtn) submitBtn.style.display = "block";
+    if (resetBtn) resetBtn.style.display = "block";
   }
 }
 function setupMeczSelects() {
@@ -276,8 +295,14 @@ function setupMeczSelects() {
       druzyna2.value = "";
     }
   }
-  druzyna1.addEventListener("change", updateSelects);
-  druzyna2.addEventListener("change", updateSelects);
+  if (!druzyna1.dataset.listener) {
+    druzyna1.dataset.listener = "true";
+    druzyna1.addEventListener("change", updateSelects);
+  }
+  if (!druzyna2.dataset.listener) {
+    druzyna2.dataset.listener = "true";
+    druzyna2.addEventListener("change", updateSelects);
+  }
 }
 function setupMeczSelectsSedzia() {
   const sedziaSelect = document.getElementById("sedzia_select");
@@ -301,73 +326,96 @@ function setupMeczSelectsSedzia() {
     if (asystent2Val === sedziaVal) asystent2Select.value = "";
     if (asystent1Val === asystent2Val) asystent2Select.value = "";
   }
-  sedziaSelect.addEventListener("change", updateSedziaSelects);
-  asystent1Select.addEventListener("change", updateSedziaSelects);
-  asystent2Select.addEventListener("change", updateSedziaSelects);
+  if (!sedziaSelect.dataset.listener) {
+    sedziaSelect.dataset.listener = "true";
+    sedziaSelect.addEventListener("change", updateSedziaSelects);
+  }
+  if (!asystent1Select.dataset.listener) {
+    asystent1Select.dataset.listener = "true";
+    asystent1Select.addEventListener("change", updateSedziaSelects);
+  }
+  if (!asystent2Select.dataset.listener) {
+    asystent2Select.dataset.listener = "true";
+    asystent2Select.addEventListener("change", updateSedziaSelects);
+  }
 }
 function usunMecz() {
   const checkBoxes = document.getElementsByClassName("mecz_checkbox");
+  if (!checkBoxes.length) return;
+  const check = checkBoxes[0];
   const submitBtn = document.getElementById("submit_usun_mecz");
   const resetBtn = document.getElementById("reset_mecz");
   const form = document.getElementById("mecz_form");
-  if(submitBtn.style.display === "block") {
+  if (window.getComputedStyle(check).display === "block") {
     HideAllMeczeActions();
     return;
-  }else {
-    HideAllMeczeActions();
-    const labels = document.querySelectorAll("label[for^='mecz_id_checkbox_']");
-    labels.forEach((label, index) => {
-      if(checkBoxes[index]){
-        label.htmlFor = checkBoxes[index].id;
-      }
-    });
-    if(form) form.action = "../actions/usun_mecz.php";
-    if(resetBtn) resetBtn.style.display = "block";
-    for(let cb of checkBoxes){
-      cb.style.display = "block";
-    }
-    submitBtn.style.display = "block";
   }
+  HideAllMeczeActions();
+  const labels = document.querySelectorAll("label[for^='mecz_id_checkbox_']");
+  labels.forEach((label, index) => {
+    if (checkBoxes[index]) {
+      label.htmlFor = checkBoxes[index].id;
+    }
+  });
+  if (form) form.action = "php/actions/usun_mecz.php";
+  if (resetBtn) resetBtn.style.display = "block";
+  for (let cb of checkBoxes) {
+    cb.style.display = "block";
+  }
+  if (submitBtn) submitBtn.style.display = "block";
 }
 function edytujMecz() {
   const radioBoxes = document.getElementsByClassName("mecz_radio");
+  if (!radioBoxes.length) return;
+  const check = radioBoxes[0];
   const submitBtn = document.getElementById("submit_edytuj_mecz");
   const resetBtn = document.getElementById("reset_mecz");
   const form = document.getElementById("mecz_form");
-  if(submitBtn.style.display === "block") {
+  if (window.getComputedStyle(check).display === "block") {
     HideAllMeczeActions();
     return;
-  } else {
-    HideAllMeczeActions();
-    const labels = document.querySelectorAll("label[for^='mecz_id_']");
-    labels.forEach((label, index) => {
-      if(radioBoxes[index]){
-        label.htmlFor = radioBoxes[index].id;
-      }
-    });
-    if(form) form.action = "";
-    if(resetBtn) resetBtn.style.display = "block";
-    for(let rb of radioBoxes){
-      rb.style.display = "block";
-    }
-    submitBtn.style.display = "block";
   }
+  HideAllMeczeActions();
+  const labels = document.querySelectorAll("label[for^='mecz_id_']");
+  labels.forEach((label, index) => {
+    if (radioBoxes[index]) {
+      label.htmlFor = radioBoxes[index].id;
+    }
+  });
+  if (form) form.action = "";
+  if (resetBtn) resetBtn.style.display = "block";
+  for (let rb of radioBoxes) {
+    rb.style.display = "block";
+  }
+  if (submitBtn) submitBtn.style.display = "block";
 }
 function edytujMeczForm() {
   const selected = document.querySelector(".mecz_radio:checked");
-  if(!selected) {
+  if (!selected) {
     alert("Proszę wybrać mecz do edycji.");
     return;
   }
   const formSection = document.getElementById("edytuj_mecz_section");
   const label = document.querySelector(`label[for="${selected.id}"]`);
-  const id = selected.value;
   const row = label.closest("tr");
+  if (!row) return;
   document.getElementById("edytuj_druzyna_1_select").value = row.dataset.druzyna1Id;
   document.getElementById("edytuj_druzyna_2_select").value = row.dataset.druzyna2Id;
-  document.getElementById("edytuj_mecz_id").value = id;
+  document.getElementById("edytuj_mecz_id").value = selected.value;
   document.getElementById("edytuj_sedzia_select").value = row.dataset.sedziaId;
   document.getElementById("edytuj_asystent_1_select").value = row.dataset.asystent1Id;
   document.getElementById("edytuj_asystent_2_select").value = row.dataset.asystent2Id;
-  formSection.style.display = "block";
+  if (formSection) formSection.style.display = "block";
+}
+function generujMecze() {
+  const generujForm = document.getElementById("generuj_mecze_form");
+  if (!generujForm) return;
+  if (window.getComputedStyle(generujForm).display === "block") {
+    HideAllMeczeActions();
+    return;
+  }
+  HideAllMeczeActions();
+  const wybierzTurniej = document.getElementById("generuj_wybierz_turniej");
+  generujForm.style.display = "block";
+  if (wybierzTurniej) wybierzTurniej.style.display = "block";
 }

@@ -10,10 +10,10 @@ if(!isset($_SESSION["turniej_id"]) || $_SESSION["turniej_id"] == "") {
         <label for="liczba_meczy_jednoczesnie"><p>Liczba meczy rozgrywanych w tym samym momencie:</p></label>
         <input type="number" name="liczba_meczy_jednoczesnie" placeholder="Liczba meczy jednocześnie" min="1" max="10" value="1" id="liczba_meczy_jednoczesnie" required><br>
         <label for="generuj_sedzia_select"><p>Wybierz głównych sędziów:<br><span>(Prztyrzymaj Control by zaznaczyć więcej)</span></p></label>
-        <select name="sedzia" id="generuj_sedzia_select" multiple>
+        <select name="sedzia[]" id="generuj_sedzia_select" multiple required>
             <?php sedzia_select($sedziowie); ?>
         </select><br>
-        <lebel for="generuj_button">Wygenerowanie meczu spowoduje usunięcie wszystkich meczów w wybranym turnieju</lebel>
+        <label for="generuj_button">Wygenerowanie meczu spowoduje usunięcie wszystkich meczów w wybranym turnieju</label>
         <button type="submit" id="generuj_button">Generuj</button>
     </form>
     <?php

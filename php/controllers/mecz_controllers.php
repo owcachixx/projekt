@@ -48,7 +48,7 @@ function table_mecze() {
         error_log("Błąd zapytania: ".pobierz_mecz());
     }else{
         if(mysqli_num_rows($query) == 0){
-        echo "<tr><td colspan='6' id='brak_mecz'>Nie ma jeszcze meczy w turnieju.</td></tr>";
+        echo "<tr><td colspan='6'>Nie ma jeszcze meczy w turnieju.</td></tr>";
         }else{
             while($row=mysqli_fetch_assoc($query)){
                 echo "<tr>
