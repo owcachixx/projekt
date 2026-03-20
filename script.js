@@ -368,7 +368,7 @@ function usunMecz() {
     }
     if (submitBtn) submitBtn.style.display = "block";
     if (resetBtn) resetBtn.style.display = "block";
-    if (form) form.action = "php/actions/usun_mecz.php";
+    if (form) form.action = "../php/actions/usun_mecz.php";
     labels.forEach((label, index) => {
       if (checkBoxes[index]) {
         label.htmlFor = "mecz_id_checkbox_$row[id]";
