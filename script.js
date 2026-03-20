@@ -241,21 +241,33 @@ function edytujForm() {
 function HideAllMeczeActions() {
   const druzyna1Select = document.getElementById("druzyna_1_select");
   const druzyna2Select = document.getElementById("druzyna_2_select");
-  const submitBtn = document.getElementById("submit_dodaj_mecz");
+  const submitAddBtn = document.getElementById("submit_dodaj_mecz");
   const resetAddBtn = document.getElementById("reset_dodaj_mecz");
   const resetBtn = document.getElementById("reset_mecz");
   const dodajForm = document.getElementById("dodaj_mecz_form");
   const generateForm = document.getElementById("generuj_mecze_form");
   const wybierzTurniej = document.getElementsByClassName("wybierz_turniej");
+  const submitEditBtn = document.getElementById("submit_edytuj_mecz");
+  const submitDelBtn = document.getElementById("submit_usun_mecz");
+  const checkBoxes = document.getElementsByClassName("mecz_checkbox");
+  const radioBoxes = document.getElementsByClassName("mecz_radio");
   if (resetBtn) resetBtn.style.display = "none";
   if (resetAddBtn) resetAddBtn.style.display = "none";
-  if (submitBtn) submitBtn.style.display = "none";
+  if (submitAddBtn) submitAddBtn.style.display = "none";
   if (druzyna1Select) druzyna1Select.style.display = "none";
   if (druzyna2Select) druzyna2Select.style.display = "none";
   if (dodajForm) dodajForm.style.display = "none";
+  if (submitDelBtn) submitDelBtn.style.display = "none";
   if (generateForm) generateForm.style.display = "none";
+  if (submitEditBtn) submitEditBtn.style.display = "none";
   for (let el of wybierzTurniej) {
     el.style.display = "none";
+  }
+  for (let cb of checkBoxes) {
+      cb.style.display = "none";
+    }
+  for(let rb of radioBoxes){
+    rb.style.display = "none";
   }
 }
 function dodajMecz() {
@@ -340,54 +352,54 @@ function setupMeczSelectsSedzia() {
   }
 }
 function usunMecz() {
-  const checkBoxes = document.getElementsByClassName("mecz_checkbox");
-  if (!checkBoxes.length) return;
-  const check = checkBoxes[0];
-  const submitBtn = document.getElementById("submit_usun_mecz");
-  const resetBtn = document.getElementById("reset_mecz");
-  const form = document.getElementById("mecz_form");
-  if (window.getComputedStyle(check).display === "block") {
+  const check = document.getElementsByClassName("mecz_checkbox")[0];
+  if (check.style.display === "block") {
     HideAllMeczeActions();
     return;
-  }
-  HideAllMeczeActions();
-  const labels = document.querySelectorAll("label[for^='mecz_id_checkbox_']");
-  labels.forEach((label, index) => {
-    if (checkBoxes[index]) {
-      label.htmlFor = checkBoxes[index].id;
+  }else{
+    HideAllMeczeActions();
+    const checkBoxes = document.getElementsByClassName("mecz_checkbox");
+    const submitBtn = document.getElementById("submit_usun_mecz");
+    const resetBtn = document.getElementById("reset_mecz");
+    const form = document.getElementById("mecz_form");
+    const labels = document.querySelectorAll("label[for^='mecz_id_checkbox_']");
+    for (let cb of checkBoxes) {
+      cb.style.display = "block";
     }
-  });
-  if (form) form.action = "php/actions/usun_mecz.php";
-  if (resetBtn) resetBtn.style.display = "block";
-  for (let cb of checkBoxes) {
-    cb.style.display = "block";
+    if (submitBtn) submitBtn.style.display = "block";
+    if (resetBtn) resetBtn.style.display = "block";
+    if (form) form.action = "../php/actions/usun_mecz.php";
+    labels.forEach((label, index) => {
+      if (checkBoxes[index]) {
+        label.htmlFor = "mecz_id_checkbox_$row[id]";
+      }
+    });
   }
-  if (submitBtn) submitBtn.style.display = "block";
 }
 function edytujMecz() {
-  const radioBoxes = document.getElementsByClassName("mecz_radio");
-  if (!radioBoxes.length) return;
-  const check = radioBoxes[0];
-  const submitBtn = document.getElementById("submit_edytuj_mecz");
-  const resetBtn = document.getElementById("reset_mecz");
-  const form = document.getElementById("mecz_form");
-  if (window.getComputedStyle(check).display === "block") {
+  const check = document.getElementsByClassName("mecz_radio")[0];
+  if (check.style.display === "block"){
     HideAllMeczeActions();
     return;
-  }
-  HideAllMeczeActions();
-  const labels = document.querySelectorAll("label[for^='mecz_id_']");
-  labels.forEach((label, index) => {
-    if (radioBoxes[index]) {
-      label.htmlFor = radioBoxes[index].id;
+  }else{
+    HideAllMeczeActions();
+    const radioBoxes = document.getElementsByClassName("mecz_radio");
+    const submitBtn = document.getElementById("submit_edytuj_mecz");
+    const resetBtn = document.getElementById("reset_mecz");
+    const form = document.getElementById("mecz_form");
+    const labels = document.querySelectorAll("label[for^='mecz_id_']");
+    for(let rb of radioBoxes){
+      rb.style.display = "block";
     }
-  });
-  if (form) form.action = "";
-  if (resetBtn) resetBtn.style.display = "block";
-  for (let rb of radioBoxes) {
-    rb.style.display = "block";
-  }
-  if (submitBtn) submitBtn.style.display = "block";
+    if (submitBtn) submitBtn.style.display = "block";
+    if(resetBtn) resetBtn.style.display = "block";
+    if(form) form.action = "";
+    labels.forEach((label, index) => {
+      if (radioBoxes[index]) {
+        label.htmlFor = "mecz_id_radio_$row[id]";
+      }
+    });
+}
 }
 function edytujMeczForm() {
   const selected = document.querySelector(".mecz_radio:checked");
