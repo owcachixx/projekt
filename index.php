@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Turniej</title>
     <link rel="stylesheet" href="style.css">
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
 <div class="tabs">
@@ -15,7 +15,9 @@
   <button class="tab-btn" data-file="tabs/drabina.html">Tablica wyników</button>
 </div>
 <div id="content"></div>
-<div id="turniej_wybor"></div>
-<script src="js/controllers/turniejMiniTab.js"></script>
+<div id="turniej_wybor">
+  <?php include "tabs/miniTab/turniej_select.php" ?>
+</div>
+
 </body>
 </html>

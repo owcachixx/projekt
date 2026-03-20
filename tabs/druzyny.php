@@ -1,10 +1,13 @@
-<?php session_start(); ?>
+<?php 
+include "../php/includes/session.php";
+include "../php/controllers/druzyna_controllers.php";
+?>
 <section class="buttons">
 <button class="dodaj_druzyne" onclick="dodajDruzyne()">Dodaj drużynę</button>
 <button class="usun_druzyne" onclick="usunDruzyne()">Usuń drużynę</button>
 <button class="zglos_druzyne" onclick="zglosDruzyne()">Zgłoś drużynę</button>
 <button class="wycofaj_druzyne" onclick="wycofajDruzyne()">Wycofaj drużynę</button>
-<form action="../actions/dodaj_druzyna.php" method="post" class="dodaj_druzyne_form" style="display: none;">
+<form action="../php/actions/dodaj_druzyna.php" method="post" class="dodaj_druzyne_form" style="display: none;">
     <input type="text" placeholder="Nazwa drużyny" name="nazwa">
     <button type="submit">Dodaj</button>
 </form>
@@ -15,33 +18,11 @@
     <tr>
         <th colspan="2" style="border: 1px solid black;">Pula drużyn</th>
     </tr>
-    <?php
-        require_once "../includes/database.php";
-        $sql="SELECT * FROM druzyna";
-        $query=mysqli_query($con,$sql);
-        while($row=mysqli_fetch_assoc($query)){
-            echo "<tr>
-            <td><input type='checkbox' class='nie_grajace_druzyny' style='display: none;' value='on' name='$row[id]'></td>
-            <td>".$row['nazwa']."</td>
-            </tr>";
-        }
-            ?>
+    <?php pokaz_pule_druzyn(); ?>
 </table>
 <table style="border: 1px solid black;">
     <th colspan="2" style="border: 1px solid black;"><?php echo isset($_SESSION['turniej_id']) ? 'Drużyny grające' : 'Wybierz turniej, aby zobaczyć drużyny.'; ?></th>
-    <?php
-    if(isset($_SESSION['turniej_id'])){
-        $sql2="SELECT * FROM udzial JOIN druzyna ON udzial.id_druzyna = druzyna.id WHERE id_turniej = ".$_SESSION['turniej_id'];
-        $query2=mysqli_query($con,$sql2);
-        while($row2=mysqli_fetch_assoc($query2)){
-            $udzial_id = $row2['id'];
-            echo "<tr>
-            <td>".("<input type='checkbox' class='grajace_druzyny' style='display: none;' value='$udzial_id' name='$udzial_id'>")."</td>
-            <td>".($row2['nazwa'])."</td>
-            </tr>";
-        }}
-    mysqli_close($con);
-    ?>
+    <?php pokaz_druzyny_turjeju(); ?>
 </table>
 <button type="reset" style="display: none;" id="reset_druzyny">Reset</button>
 <button type="submit" style="display: none;" id="submit_druzyny_usun">Usuń</button>
