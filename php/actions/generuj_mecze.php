@@ -103,8 +103,8 @@ if (
         $druzyna2 = ($mecz['druzyna_2'] !== null) ? intval($mecz['druzyna_2']) : "NULL";
 
         $sql_insert = "INSERT INTO mecz
-        (druzyna_1, druzyna_2, sedzia, sedzia_asystent_1, sedzia_asystent_2, turniej_id)
-        VALUES ($druzyna1, $druzyna2, $sedzia, $asystent1, $asystent2, $turniej_id)";
+        (druzyna_1, druzyna_2, sedzia, sedzia_asystent_1, sedzia_asystent_2, turniej_id, runda)
+        VALUES ($druzyna1, $druzyna2, $sedzia, $asystent1, $asystent2, $turniej_id, 1)";
 
         if (!mysqli_query($con, $sql_insert)) {
             error_log("Błąd INSERT: ".mysqli_error($con)." | SQL: $sql_insert");
