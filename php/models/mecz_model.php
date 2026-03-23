@@ -9,6 +9,15 @@ function pobierz_udzial() {
     return $query;
 }
 
+function pobierz_udzial_cout_druzyny() {
+    global $con;
+    $sql="SELECT COUNT(druzyna_1) + COUNT(druzyna_2) AS liczba_druzyn
+        FROM mecz
+        WHERE turniej_id ".$_SESSION['turniej_id'];
+    $query=mysqli_query($con, $sql);
+    return $query;
+}
+
 function pobierz_mecz() {
     global $con;
     $sql="SELECT 
