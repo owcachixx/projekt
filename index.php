@@ -6,13 +6,15 @@
     <title>Turniej</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
+    <script src="js/controllers/drabinaController.js" defer></script>
+    <script src="js/controllers/brackets.js" defer></script>
 </head>
 <body>
 <div class="tabs">
   <button class="tab-btn" data-file="tabs/druzyny.php">Drużyny</button>
   <button class="tab-btn" data-file="tabs/sedziowie.php">Sędziowie</button>
   <button class="tab-btn" data-file="tabs/mecze.php">Mecze turnieu</button>
-  <button class="tab-btn" data-file="tabs/drabina.html">Tablica wyników</button>
+  <button class="tab-btn" data-file="tabs/drabina.php">Tablica wyników</button>
 </div>
 <div id="content"></div>
 <div id="turniej_wybor">
