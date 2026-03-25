@@ -23,13 +23,13 @@ Umożliwia prowadzenie tabel drużyn, zarządzanie sędziami oraz tworzenie turn
 - **Drużyny:** dodawanie, usuwanie i edycja drużyn uczestniczących w turnieju. 
 - **Sędziowie:** możliwość dodania, usunięcia i edycji sędziów.  
 - **Turnieje:** dodawanie nowego turnieju z nazwą i datą, zmiana między turniejami.  
-- **Generowanie meczów:** automatyczne generowanie drużyn i przydział sędziów (3 sędziów na mecz).  
-- **Edycja meczy:** zmiana wyników i szczegółów meczu po jego dodaniu.  
 
 ---
 
 ## Plany rozwoju
+- **Losowanie meczów:** automatyczne losowanie drużyn i przydział sędziów (3 sędziów na mecz).  
 - **Graficzna drabinka turniejowa:** wizualne przedstawienie rozgrywek, możliwość eksportu do PDF.  
+- **Edycja meczów:** zmiana wyników i szczegółów meczu po jego dodaniu.  
 - Rozbudowa statystyk i automatyczne aktualizacje tabel po zakończonych meczach.  
 
 ---

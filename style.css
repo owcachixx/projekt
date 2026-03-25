@@ -36,3 +36,6 @@ div.przyciski button{
   border:none;
   background-color: #69be28;
 }
+#turniej_wybor{
+  float: right;
+}
