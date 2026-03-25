@@ -1,45 +1,30 @@
-    <div class="bracket">
-      
-      <!-- PÓŁFINAŁ 1 -->
-      <div class="match">
-        <div class="date">23.03.2026</div>
-        <div class="team">
-          <span>Team 1</span>
-          <span class="score win">1</span>
-        </div>
-        <div class="team">
-          <span>Team 4</span>
-          <span class="score">0</span>
-        </div>
-        <div class="round">round 1</div>
+<?php 
+include __DIR__."/../php/controllers/brackets_controller.php";
+?>
+<section class="buttons">
+  <?php generuj_runde(2); ?>
+</section>
+<div class="bracket4">
+  <!-- Półfinały: 4 drużyny -->
+  <section class="round semifinals round1">
+    <div class="winners">
+      <div class="matchups">
+        <?php bracket(); ?>
       </div>
-
-      <!-- PÓŁFINAŁ 2 -->
-      <div class="match">
-        <div class="date">23.03.2026</div>
-        <div class="team">
-          <span>Team 2</span>
-          <span class="score win">1</span>
-        </div>
-        <div class="team">
-          <span>Team 3</span>
-          <span class="score">0</span>
-        </div>
-        <div class="round">round 1</div>
-      </div>
-
-      <!-- FINAŁ -->
-      <div class="match final">
-        <div class="date">23.03.2026</div>
-        <div class="team">
-          <span><i>Team 1</i></span>
-          <span class="score">2</span>
-        </div>
-        <div class="team">
-          <span><i>Team 2</i></span>
-          <span class="score win">3</span>
-        </div>
-        <div class="round">round 2</div>
-      </div>
-
     </div>
+    <div class="connector">
+      <div class="merger"></div>
+      <div class="line"></div>
+    </div>
+  </section>
+
+  <!-- Finał: 2 drużyny -->
+  <section class="round finals round2">
+    <div class="winners">
+      <div class="matchups">
+        <?php bracket(2); ?>
+      </div>
+    </div>
+  </section>
+
+</div>
