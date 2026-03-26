@@ -84,22 +84,6 @@ function table_mecze($runda = null) {
                 </tr>";
                 }
             }
-            $query2=pobierz_jedna_druzyna();
-            if(!$query2){
-                error_log("Błąd zapytania: ".pobierz_jedna_druzyna());
-            }else{
-                if(mysqli_num_rows($query2) !== 0){
-                $row2=mysqli_fetch_assoc($query2);
-                echo "<tr>
-                <td><input type='checkbox' class='mecz_checkbox' id='mecz_id_checkbox_$row2[id]' name='mecz_id[]' value='$row2[id]' style='display: none;'/>
-                <input type='radio' class='mecz_radio' id='mecz_id_radio_$row2[id]' name='mecz_id' value='$row2[id]' style='display: none;' 
-                data-druzyna-1='$row2[druzyna_1]' data-druzyna-2='brak' data-sedzia-id='brak' data-asystent1-id='brak' data-asystent2-id='brak' data-id='$row2[id]'/>
-                <label for='mecz_id_$row2[id]'>$row2[druzyna_1]</label></td>
-                <td><label for='mecz_id_$row2[id]'>  </label></td>
-                <td><label for='mecz_id_$row2[id]'><span class='BYE'>$row2[druzyna_2]</span></label></td>
-                </tr>";
-                }
-            }
         }
     }
 }
