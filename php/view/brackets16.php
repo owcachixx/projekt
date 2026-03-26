@@ -1,8 +1,9 @@
 <?php 
-include __DIR__."/../php/controllers/brackets_controller.php";
+include __DIR__."/../controllers/brackets_controller.php";
 ?>
 <section class="buttons">
   <?php generuj_runde(4); ?>
+  <button onclick="generujPDF()">Pobierz PDF</button>
 </section>
 <div class="bracket16">
   <!-- Runda 2: 16 drużyn -->

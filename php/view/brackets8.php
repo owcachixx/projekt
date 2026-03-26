@@ -1,8 +1,9 @@
 <?php 
-include __DIR__."/../php/controllers/brackets_controller.php";
+include __DIR__."/../controllers/brackets_controller.php";
 ?>
 <section class="buttons">
   <?php generuj_runde(3) ?>
+  <button onclick="generujPDF()">Pobierz PDF</button>
 </section>
 <div class="bracket8">
   <!-- Ćwierćfinały: 8 drużyn -->
