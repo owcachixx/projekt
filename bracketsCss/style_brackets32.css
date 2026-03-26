@@ -119,7 +119,7 @@ body {
 
 /* Runda 1/16 finału: 32 drużyny */
 .bracket32 .round.round_of_32 .winners:not(:last-child) {
-  margin-bottom: 1rem;
+  margin-bottom: 3rem;
 }
 
 .bracket32 .round.round_of_32 .winners .matchups .matchup:not(:last-child) {
