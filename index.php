@@ -13,6 +13,7 @@
     <script src="script.js" defer></script>
     <script src="js/controllers/bracketsController.js" defer></script>
     <script src="js/controllers/brackets.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
 <body>
 <div class="tabs">
