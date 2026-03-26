@@ -1,6 +1,6 @@
 <?php
-require_once "../php/includes/database.php";
-require_once "../php/includes/session.php";
+require_once __DIR__."/../includes/database.php";
+require_once __DIR__."/../includes/session.php";
 
 function pobierz_udzial() {
     global $con;
@@ -9,18 +9,21 @@ function pobierz_udzial() {
     return $query;
 }
 
-function pobierz_udzial_cout_druzyny() {
+function pobierz_udzial_cout_mecz() {
     global $con;
-    $sql="SELECT COUNT(druzyna_1) + COUNT(druzyna_2) AS liczba_druzyn
+    if(!isset($_SESSION['turniej_id'])) {
+        return false;
+    }
+    $sql="SELECT COUNT(*) AS liczba_meczy
         FROM mecz
-        WHERE turniej_id =".$_SESSION['turniej_id'];
+        WHERE runda = 1 AND turniej_id =".$_SESSION['turniej_id'];
     $query=mysqli_query($con, $sql);
     return $query;
 }
 
 function pobierz_mecz($runda) {
     global $con;
-    if(!$runda) {
+    if($runda) {
         $sql="SELECT 
         mecz.id, 
         d1.nazwa AS druzyna_1, 
@@ -83,6 +86,29 @@ function pobierz_jedna_druzyna() {
     mecz.runda
     FROM mecz INNER JOIN druzyna d1 ON mecz.druzyna_1 = d1.id
     WHERE druzyna_2 IS NULL AND turniej_id = ".$_SESSION['turniej_id'];
+    $query=mysqli_query($con, $sql);
+    return $query;
+}
+function get_mecz_by_runda($runda) {
+    global $con;
+    $sql="SELECT id, wynik_druzyna_1 AS wynik_1, wynik_druzyna_2 AS wynik_2 FROM mecz WHERE runda = $runda AND turniej_id = ".$_SESSION['turniej_id'];
+    $query=mysqli_query($con, $sql);
+    return $query;
+}
+
+function get_mecz($runda) {
+    global $con;
+    $sql="SELECT 
+    mecz.id, 
+    d1.nazwa AS druzyna_1, 
+    d2.nazwa AS druzyna_2, 
+    mecz.wynik_druzyna_1 AS wynik_1, 
+    mecz.wynik_druzyna_2 AS wynik_2, 
+    runda
+    FROM mecz 
+    INNER JOIN druzyna d1 ON mecz.druzyna_1 = d1.id 
+    INNER JOIN druzyna d2 ON mecz.druzyna_2 = d2.id 
+    WHERE runda = $runda AND turniej_id =".$_SESSION['turniej_id'];
     $query=mysqli_query($con, $sql);
     return $query;
 }
