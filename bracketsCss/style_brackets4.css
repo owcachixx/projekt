@@ -1,0 +1,140 @@
+@import 'https://fonts.googleapis.com/css?family=Roboto+Slab:400,700';
+
+body {
+  background: #f0f2f2;
+}
+
+.bracket4 {
+  display: inline-block;
+  white-space: nowrap;
+  font-size: 0;
+  margin: 2rem auto;
+  font-size: 1rem;
+}
+
+.bracket4 .round {
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 3rem;
+}
+
+.bracket4 .round .winners > div {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.bracket4 .round .winners > div.matchups .matchup:last-child {
+  margin-bottom: 0 !important;
+}
+
+.bracket4 .round .winners > div.matchups .matchup .participants {
+  border-radius: 0.25rem;
+  overflow: hidden;
+}
+
+.bracket4 .round .participant {
+  position: relative;
+  width: 100%;
+}
+
+.bracket4 .round .score {
+  position: absolute;
+  right: 0;
+}
+
+.bracket4 .round .winners > div.matchups .matchup .participants .participant {
+  box-sizing: border-box;
+  color: #858585;
+  border-left: 0.25rem solid #858585;
+  background: white;
+  width: 14rem;
+  height: 3rem;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.12);
+}
+
+.bracket4 .round .winners > div.matchups .matchup .participants .participant.winner {
+  color: #60c645;
+  border-color: #60c645;
+}
+
+.bracket4 .round .winners > div.matchups .matchup .participants .participant.loser {
+  color: #dc563f;
+  border-color: #dc563f;
+}
+
+.bracket4 .round .winners > div.matchups .matchup .participants .participant:not(:last-child) {
+  border-bottom: thin solid #f0f2f2;
+}
+
+.bracket4 .round .winners > div.matchups .matchup .participants .participant span {
+  margin: 0 1.25rem;
+  line-height: 3;
+  font-size: 1rem;
+  font-family: "Roboto Slab";
+}
+
+.bracket4 .round .winners > div.connector .line,
+.bracket4 .round .winners > div.connector .merger:before,
+.bracket4 .round .winners > div.connector .merger:after {
+  border-color: #888;
+  border-width: 2px; 
+}
+
+.bracket4 .round .winners > div.connector .line,
+.bracket4 .round .winners > div.connector .merger {
+  box-sizing: border-box;
+  width: 2rem;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.bracket4 .round .winners > div.connector .line {
+  border-bottom: thin solid #c0c0c8;
+}
+
+.bracket4 .round .winners > div.connector .merger {
+  position: relative;
+}
+
+.bracket4 .round .winners > div.connector .merger:before,
+.bracket4 .round .winners > div.connector .merger:after {
+  content: "";
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: 50%;
+  border: 0 solid;
+  border-color: #c0c0c8;
+}
+
+.bracket4 .round .winners > div.connector .merger:before {
+  border-right-width: thin;
+  border-top-width: thin;
+}
+
+.bracket4 .round .winners > div.connector .merger:after {
+  border-right-width: thin;
+  border-bottom-width: thin;
+}
+
+/* Półfinały */
+.bracket4 .round.semifinals .winners .matchups .matchup:not(:last-child) {
+  margin-bottom: 3rem;
+}
+
+.bracket4 .round.semifinals .winners .connector .merger {
+  height: 1rem;
+}
+
+.bracket4 .round.semifinals .winners .connector .line {
+  height: 4rem;
+}
+
+/* Finał */
+.bracket4 .round.finals .winners .connector .merger {
+  height: 3rem;
+}
+
+.bracket4 .round.finals .winners .connector .line {
+  height: 1.5rem;
+}

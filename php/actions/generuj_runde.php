@@ -10,11 +10,15 @@ require_once __DIR__ . "/../includes/database.php";
 $turniej_id = intval($_POST['turniej_id']);
 $liczba_meczy_jednoczesnie = intval($_POST['liczba_meczy_jednoczesnie']);
 $sedzia_glowni = array_map('intval', $_POST['sedzia']);
-$runda=$_POST['runda'];
 
 if (count($sedzia_glowni) < 1) {
     error_log("Brak głównych sędziów.");
     exit;
+}
+
+$sql_delete = "DELETE FROM mecz WHERE turniej_id = $turniej_id";
+if (!mysqli_query($con, $sql_delete)) {
+    error_log("Błąd DELETE: " . mysqli_error($con));
 }
 
 $query_sedziowie = mysqli_query($con, "SELECT id FROM sedzia");
@@ -109,7 +113,7 @@ foreach ($mecze as $mecz) {
     $druzyna2 = intval($mecz['druzyna_2']);
 
     $sql_insert = "INSERT INTO mecz(druzyna_1, druzyna_2, sedzia, sedzia_asystent_1, sedzia_asystent_2, turniej_id, runda)
-                   VALUES($druzyna1, $druzyna2, $sedzia, $asystent1, $asystent2, $turniej_id, $runda)";
+                   VALUES($druzyna1, $druzyna2, $sedzia, $asystent1, $asystent2, $turniej_id, 1)";
 
     if (!mysqli_query($con, $sql_insert)) {
         error_log("Błąd INSERT: " . mysqli_error($con));

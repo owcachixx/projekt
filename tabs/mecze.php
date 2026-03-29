@@ -20,8 +20,20 @@
             <th>Wynik</th>
             <th>Sędzia</th>
             <th colspan="2">Sędziowie asystujący</th>
+            <th>
+                <select id="round" onchange="loadMatches()">
+                    <option value="">Wszystkie rundy</option>
+                    <option value="1">Runda 1</option>
+                    <option value="2">Runda 2</option>
+                    <option value="3">Runda 3</option>
+                    <option value="4">Runda 4</option>
+                    <option value="5">Runda 5</option>
+                </select>
+            </th>
         </tr>
-    <?php table_mecze(); ?>
+        <tbody id="tableMecz">
+            <?php table_mecze(); ?>
+</tbody>
     </table>
     <button type="reset" id="reset_mecz" style="display: none;">Reset</button>
     <button type="submit" id="submit_usun_mecz" style="display: none;">Usuń</button>
